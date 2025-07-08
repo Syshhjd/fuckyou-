@@ -1,0 +1,492 @@
+[
+  {
+    "id": "3A74EACFB406DF2F9E8C",
+    "jid": "50942454571@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "50942454571@s.whatsapp.net",
+        "fromMe": false,
+        "id": "3A74EACFB406DF2F9E8C"
+      },
+      "messageTimestamp": 1751464919,
+      "pushName": "Herby 🫂✨",
+      "broadcast": false,
+      "message": {
+        "extendedTextMessage": {
+          "text": "😂😂",
+          "contextInfo": {
+            "stanzaId": "F12A341A7E6E044ED09B220BF76AA084",
+            "participant": "50947731439@s.whatsapp.net",
+            "quotedMessage": {
+              "conversation": "*SEEN YOUR STATUS BY MAFIA-MD 🤍*"
+            }
+          }
+        },
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "senderTimestamp": "1751463119",
+            "recipientKeyHash": "rDFpmXm8UP5sig==",
+            "recipientTimestamp": "1751403101"
+          },
+          "deviceListMetadataVersion": 2,
+          "messageSecret": "rlYW+9Vfi6mf+XCrp6m25etjsXkbMCkyjQ4f8HhB514="
+        }
+      }
+    },
+    "timestamp": 1751464919000
+  },
+  {
+    "id": "3A2B4FA4541870500423",
+    "jid": "12237975824@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "12237975824@s.whatsapp.net",
+        "fromMe": true,
+        "id": "3A2B4FA4541870500423"
+      },
+      "messageTimestamp": 1751465978,
+      "pushName": "MAFIA-MD",
+      "broadcast": false,
+      "status": 2,
+      "message": {
+        "conversation": "Vinn nan br se sukuna"
+      }
+    },
+    "timestamp": 1751465978000
+  },
+  {
+    "id": "2F7FD1825F474B7FAC54",
+    "jid": "50947731439@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "50947731439@s.whatsapp.net",
+        "fromMe": true,
+        "id": "2F7FD1825F474B7FAC54"
+      },
+      "messageTimestamp": 1751466545,
+      "broadcast": false,
+      "status": 2,
+      "message": {
+        "protocolMessage": {
+          "type": "PEER_DATA_OPERATION_REQUEST_RESPONSE_MESSAGE",
+          "peerDataOperationRequestResponseMessage": {
+            "peerDataOperationRequestType": "PLACEHOLDER_MESSAGE_RESEND",
+            "stanzaId": "565A73516D1E578C0F3927D6FBD3C53E",
+            "peerDataOperationResult": [
+              {
+                "placeholderMessageResendResponse": {
+                  "webMessageInfoBytes": "CkAKGjUwOTQ0NDMzMjA4QHMud2hhdHNhcHAubmV0EAAaIDkzMzk3QTdENTlDQjgzNUExQ0VDMUZCQ0JBRTQ1OTE4EnsKVE1lcmNpIGTigJlhdm9pciBjb250YWN0w6kgVHdpbmtsZSBMdXjCoCEgRGl0ZXMtbm91cyBlbiBxdW9pIG5vdXMgcG91dm9ucyB2b3VzIGFpZGVyLpoCIhog9xodaa7VzsnN/TnitAlgdg3MUyheDBQcy8PO3h2Oz7wYqoSVwwY="
+                }
+              }
+            ]
+          }
+        },
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "senderKeyHash": "rDFpmXm8UP5sig==",
+            "senderTimestamp": "1751403101"
+          },
+          "deviceListMetadataVersion": 2
+        }
+      }
+    },
+    "timestamp": 1751466545000
+  },
+  {
+    "id": "93397A7D59CB835A1CEC1FBCBAE45918",
+    "jid": "50944433208@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "50944433208@s.whatsapp.net",
+        "fromMe": false,
+        "id": "93397A7D59CB835A1CEC1FBCBAE45918"
+      },
+      "message": {
+        "conversation": "Merci d’avoir contacté Twinkle Lux ! Dites-nous en quoi nous pouvons vous aider.",
+        "messageContextInfo": {
+          "messageSecret": "9xodaa7VzsnN/TnitAlgdg3MUyheDBQcy8PO3h2Oz7w="
+        }
+      },
+      "messageTimestamp": "1751466538"
+    },
+    "timestamp": 1751466538000
+  },
+  {
+    "id": "3ACA46A3C04C70B5844B",
+    "jid": "50935141971@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "50935141971@s.whatsapp.net",
+        "fromMe": true,
+        "id": "3ACA46A3C04C70B5844B"
+      },
+      "messageTimestamp": 1751467025,
+      "pushName": "MAFIA-MD",
+      "broadcast": false,
+      "status": 2,
+      "message": {
+        "conversation": "M’en vidéo a https://vm.tiktok.com/ZMSXcJs6u/"
+      }
+    },
+    "timestamp": 1751467025000
+  },
+  {
+    "id": "973DF05EFAB3B07953BA50A2749E7227",
+    "jid": "50935141971@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "50935141971@s.whatsapp.net",
+        "fromMe": false,
+        "id": "973DF05EFAB3B07953BA50A2749E7227"
+      },
+      "messageTimestamp": 1751468029,
+      "pushName": "Messi🤘💪🧠🫀💯",
+      "broadcast": false,
+      "message": {
+        "conversation": "On plan pou mw baz sou natcom nan",
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "recipientKeyHash": "rDFpmXm8UP5sig==",
+            "recipientTimestamp": "1751403101"
+          },
+          "deviceListMetadataVersion": 2,
+          "messageSecret": "ZAo2uY/ti5dzSF9HA9YhcZnOsgc5v0JnNZG9i94ivgo="
+        }
+      }
+    },
+    "timestamp": 1751468029000
+  },
+  {
+    "id": "0D3B393DDDB3438BDC98523DDDAF7261",
+    "jid": "50944433208@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "50944433208@s.whatsapp.net",
+        "fromMe": false,
+        "id": "0D3B393DDDB3438BDC98523DDDAF7261"
+      },
+      "messageTimestamp": 1751469229,
+      "pushName": "Twinkle Lux",
+      "broadcast": false,
+      "message": {
+        "conversation": "Kies",
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "recipientKeyHash": "rDFpmXm8UP5sig==",
+            "recipientTimestamp": "1751403101"
+          },
+          "deviceListMetadataVersion": 2,
+          "messageSecret": "lBID/S9J9BGVbqouBAozez/d4FuEZuDbcRTpajszYjc="
+        }
+      },
+      "verifiedBizName": "Twinkle Lux"
+    },
+    "timestamp": 1751469229000
+  },
+  {
+    "id": "3A85A0198CB5EEE76D44",
+    "jid": "50948216062@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "50948216062@s.whatsapp.net",
+        "fromMe": false,
+        "id": "3A85A0198CB5EEE76D44"
+      },
+      "messageTimestamp": 1751469248,
+      "pushName": "𝐓˚ꪝ† ‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎ 𓃵𝖙𝖎 𝖙𝖊𝖚𝖋  ぷ",
+      "broadcast": false,
+      "message": {
+        "conversation": "Ki bèt s ?",
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "senderTimestamp": "1751469166",
+            "recipientKeyHash": "rDFpmXm8UP5sig==",
+            "recipientTimestamp": "1751403101"
+          },
+          "deviceListMetadataVersion": 2,
+          "messageSecret": "YFVWjifsVgm487HADDEkxlGmGxWap0TPd6YOBwAVzEE="
+        }
+      },
+      "verifiedBizName": "𝐓˚ꪝ† ‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎ 𓃵𝖙𝖎 𝖙𝖊𝖚𝖋  ぷ"
+    },
+    "timestamp": 1751469248000
+  },
+  {
+    "id": "3A5D4A73F563CEAC5E22370AB1605A41",
+    "jid": "16463497923@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "16463497923@s.whatsapp.net",
+        "fromMe": false,
+        "id": "3A5D4A73F563CEAC5E22370AB1605A41"
+      },
+      "messageTimestamp": 1751469702,
+      "pushName": "andy_mr_lit 🚶🌚",
+      "broadcast": false,
+      "message": {
+        "reactionMessage": {
+          "key": {
+            "remoteJid": "16463497923@s.whatsapp.net",
+            "fromMe": false,
+            "id": "88D0113962FD2FEA3A92D91BFEBE1715"
+          },
+          "text": "😙",
+          "senderTimestampMs": "1751469702163"
+        }
+      }
+    },
+    "timestamp": 1751469702000
+  },
+  {
+    "id": "96C00058078E71393BAAB50419AE46B2",
+    "jid": "16463497923@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "16463497923@s.whatsapp.net",
+        "fromMe": false,
+        "id": "96C00058078E71393BAAB50419AE46B2"
+      },
+      "messageTimestamp": 1751469712,
+      "pushName": "andy_mr_lit 🚶🌚",
+      "broadcast": false,
+      "message": {
+        "extendedTextMessage": {
+          "text": "Epa menu paka paret",
+          "previewType": "NONE",
+          "contextInfo": {
+            "expiration": 7776000,
+            "ephemeralSettingTimestamp": "1747064648",
+            "disappearingMode": {
+              "initiator": "INITIATED_BY_ME",
+              "trigger": "ACCOUNT_SETTING",
+              "initiatedByMe": true
+            }
+          },
+          "inviteLinkGroupTypeV2": "DEFAULT"
+        },
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "senderKeyHash": "jOaZCVZoSpyHPA==",
+            "senderTimestamp": "1751468685",
+            "recipientKeyHash": "rDFpmXm8UP5sig==",
+            "recipientTimestamp": "1751403101"
+          },
+          "deviceListMetadataVersion": 2,
+          "messageSecret": "crfnkJPxx53eA2qWfW5yZ8tIQQ7dKf6qKzFXraj38pE="
+        }
+      }
+    },
+    "timestamp": 1751469712000
+  },
+  {
+    "id": "9F3205F2724F74272A1BFC94960B4648",
+    "jid": "16463497923@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "16463497923@s.whatsapp.net",
+        "fromMe": false,
+        "id": "9F3205F2724F74272A1BFC94960B4648"
+      },
+      "messageTimestamp": 1751469712,
+      "pushName": "andy_mr_lit 🚶🌚",
+      "broadcast": false,
+      "message": {
+        "reactionMessage": {
+          "key": {
+            "remoteJid": "16463497923@s.whatsapp.net",
+            "fromMe": false,
+            "id": "96C00058078E71393BAAB50419AE46B2"
+          },
+          "text": "🔥",
+          "senderTimestampMs": "1751469712580"
+        }
+      }
+    },
+    "timestamp": 1751469712000
+  },
+  {
+    "id": "AC199B8FD741683E893EFEDBB34B54B8",
+    "jid": "16463497923@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "16463497923@s.whatsapp.net",
+        "fromMe": false,
+        "id": "AC199B8FD741683E893EFEDBB34B54B8"
+      },
+      "messageTimestamp": 1751469724,
+      "pushName": "andy_mr_lit 🚶🌚",
+      "broadcast": false,
+      "message": {
+        "extendedTextMessage": {
+          "text": "Epim pnse e bgy mte fe ladanl lan ki oat bon",
+          "previewType": "NONE",
+          "contextInfo": {
+            "expiration": 7776000,
+            "ephemeralSettingTimestamp": "1747064648",
+            "disappearingMode": {
+              "initiator": "INITIATED_BY_ME",
+              "trigger": "ACCOUNT_SETTING",
+              "initiatedByMe": true
+            }
+          },
+          "inviteLinkGroupTypeV2": "DEFAULT"
+        },
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "senderKeyHash": "jOaZCVZoSpyHPA==",
+            "senderTimestamp": "1751468685",
+            "recipientKeyHash": "rDFpmXm8UP5sig==",
+            "recipientTimestamp": "1751403101"
+          },
+          "deviceListMetadataVersion": 2,
+          "messageSecret": "L7uWbYbZ/aJPdE+8B+NawaKxoDQmvFStVWQaqrJ5EpM="
+        }
+      }
+    },
+    "timestamp": 1751469724000
+  },
+  {
+    "id": "705827C5D42B8429BDC2794F281FD7E9",
+    "jid": "16463497923@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "16463497923@s.whatsapp.net",
+        "fromMe": false,
+        "id": "705827C5D42B8429BDC2794F281FD7E9"
+      },
+      "messageTimestamp": 1751469724,
+      "pushName": "andy_mr_lit 🚶🌚",
+      "broadcast": false,
+      "message": {
+        "reactionMessage": {
+          "key": {
+            "remoteJid": "16463497923@s.whatsapp.net",
+            "fromMe": false,
+            "id": "AC199B8FD741683E893EFEDBB34B54B8"
+          },
+          "text": "😙",
+          "senderTimestampMs": "1751469724903"
+        }
+      }
+    },
+    "timestamp": 1751469724000
+  },
+  {
+    "id": "0BC7783BFEB41A37B2BB36698B4BF559",
+    "jid": "16463497923@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "16463497923@s.whatsapp.net",
+        "fromMe": false,
+        "id": "0BC7783BFEB41A37B2BB36698B4BF559"
+      },
+      "messageTimestamp": 1751469727,
+      "pushName": "andy_mr_lit 🚶🌚",
+      "broadcast": false,
+      "message": {
+        "extendedTextMessage": {
+          "text": ".menu",
+          "previewType": "NONE",
+          "contextInfo": {
+            "expiration": 7776000,
+            "ephemeralSettingTimestamp": "1747064648",
+            "disappearingMode": {
+              "initiator": "INITIATED_BY_ME",
+              "trigger": "ACCOUNT_SETTING",
+              "initiatedByMe": true
+            }
+          },
+          "inviteLinkGroupTypeV2": "DEFAULT"
+        },
+        "messageContextInfo": {
+          "deviceListMetadata": {
+            "senderKeyHash": "jOaZCVZoSpyHPA==",
+            "senderTimestamp": "1751468685",
+            "recipientKeyHash": "rDFpmXm8UP5sig==",
+            "recipientTimestamp": "1751403101"
+          },
+          "deviceListMetadataVersion": 2,
+          "messageSecret": "X4I/7s8GrC1jQPEuCuloxuUW2TSTGzcst6h9fdLxNzU="
+        }
+      }
+    },
+    "timestamp": 1751469727000
+  },
+  {
+    "id": "5F3325CD11A5866A87BA69766CA4B022",
+    "jid": "16463497923@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "16463497923@s.whatsapp.net",
+        "fromMe": false,
+        "id": "5F3325CD11A5866A87BA69766CA4B022"
+      },
+      "messageTimestamp": 1751469727,
+      "pushName": "andy_mr_lit 🚶🌚",
+      "broadcast": false,
+      "message": {
+        "reactionMessage": {
+          "key": {
+            "remoteJid": "16463497923@s.whatsapp.net",
+            "fromMe": false,
+            "id": "0BC7783BFEB41A37B2BB36698B4BF559"
+          },
+          "text": "😒",
+          "senderTimestampMs": "1751469727064"
+        }
+      }
+    },
+    "timestamp": 1751469727000
+  },
+  {
+    "id": "3B4D848113E3074ABDD04CF5AD0DF92B",
+    "jid": "16463497923@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "16463497923@s.whatsapp.net",
+        "fromMe": false,
+        "id": "3B4D848113E3074ABDD04CF5AD0DF92B"
+      },
+      "messageTimestamp": 1751469727,
+      "pushName": "andy_mr_lit 🚶🌚",
+      "broadcast": false,
+      "message": {
+        "reactionMessage": {
+          "key": {
+            "remoteJid": "16463497923@s.whatsapp.net",
+            "fromMe": false,
+            "id": "3848D2078E19AA4AF24976FD8F5D6B32"
+          },
+          "text": "💀",
+          "senderTimestampMs": "1751469727082"
+        }
+      }
+    },
+    "timestamp": 1751469727000
+  },
+  {
+    "id": "666573C08F9A28777A5AA36A02C20C21",
+    "jid": "16463497923@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "16463497923@s.whatsapp.net",
+        "fromMe": true,
+        "id": "666573C08F9A28777A5AA36A02C20C21"
+      },
+      "message": {
+        "reactionMessage": {
+          "key": {
+            "remoteJid": "16463497923@s.whatsapp.net",
+            "fromMe": false,
+            "id": "0BC7783BFEB41A37B2BB36698B4BF559"
+          },
+          "text": "🕶️",
+          "senderTimestampMs": "1751469727150"
+        }
+      },
+      "messageTimestamp": "1751469727",
+      "status": "PENDING"
+    },
+    "timestamp": 1751469727000
+  }
+]
