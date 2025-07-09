@@ -1,89 +1,71 @@
+const fetch = require('node-fetch');
 const config = require('../config');
-const { cmd, commands } = require('../command');
-const os = require('os');
-const { performance } = require('perf_hooks'); // Pour le calcul de la vitesse
+const { cmd } = require('../command');
 
 cmd({
-  pattern: "menu",
-  alias: ["help", "Mafia"],
-  use: '.menu',
-  desc: "Show all bot commands",
-  category: "menu",
-  react: "🕶️",
-  filename: __filename
+    pattern: "repo",
+    alias: ["sc", "script", "info"],
+    desc: "Info about the repository (GitHub)",
+    react: "📂",
+    category: "info",
+    filename: __filename,
 },
 async (conn, mek, m, { from, reply }) => {
-  try {
-    const totalCommands = commands.length;
-    const startTime = performance.now(); // Début du calcul de la vitesse
+    const githubRepoURL = 'https://github.com/MRC-Tech999/MAFIA-MD';
 
-    const uptime = () => {
-      const sec = process.uptime();
-      const h = Math.floor(sec / 3600);
-      const m = Math.floor((sec % 3600) / 60);
-      const s = Math.floor(sec % 60);
-      return `${h}h ${m}m ${s}s`;
-    };
+    try {
+        const match = githubRepoURL.match(/github\.com\/([^/]+)\/([^/]+)/);
+        if (!match) return reply("❌ The link to the repository is broken, capo...");
 
-    
+        const [, username, repoName] = match;
 
-    // Simulation de la vitesse
-    const speedMs = (performance.now() - startTime).toFixed(3);
+        const response = await fetch(`https://api.github.com/repos/${username}/${repoName}`, {
+            headers: {
+                'User-Agent': 'MAFIA-MD'
+            }
+        });
 
-    let text = `
-🖤🩸═══ 𝗠𝗔𝗙𝗜𝗔-𝗠𝗗 ════🩸🖤
-╔═════════════════════╗
-║ 👤 𝗨𝘀𝗲𝗿     : @${m.sender.split("@")[0]}
-║ ⏳ 𝗥𝘂𝗻𝘁𝗶𝗺𝗲  : ${uptime()}
-║ ⚡ 𝗠𝗼𝗱𝗲     : ${config.MODE}
-║ 📝 𝗣𝗿𝗲𝗳𝗶𝘅    : [${config.PREFIX}]
-║ 📦 𝗣𝗹𝘂𝗴𝗶𝗻𝘀 : ${totalCommands}
-║ 🛠️ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 1.0.0
-║ ⚡ 𝗦𝗽𝗲𝗲𝗱    : ${speedMs} ms
-╚════════════════════╝
+        if (response.status === 503) {
+            return reply("❌ GitHub is down... Wait a bit, soldier.");
+        }
 
-🔥 *WELCOME TO MAFIA-MD* 🔥
+        if (!response.ok) {
+            return reply(`❌ You’ve been blocked from the repository. Code: ${response.status}`);
+        }
 
+        const repoData = await response.json();
+
+        const message = `
+╔══════════════╗
+║ 🕴️ 𝗧𝗛𝗘 𝗠𝗔𝗙𝗜𝗔 𝗥𝗘𝗣𝗢 🕴️
+╠══════════════════════════════
+║ 🏷️ Name: ${repoData.name}
+║ 🔫 Godfather: ${repoData.owner.login}
+║ ⭐ Influence: ${repoData.stargazers_count} stars
+║ 🍴 Forks: ${repoData.forks_count}
+║ 🔗 Repository: ${repoData.html_url}
+║ 📜 Secret code: ${repoData.description || 'No message...'}
+╚══════════════════════════════╝
+🔒 *Protected by the circle of Emperor Sukuna*
 `;
 
-    const category = {};
-    for (const cmd of commands) {
-      if (!cmd.category || cmd.category === "owner") continue; // Exclure la catégorie "owner"
-      if (!category[cmd.category]) category[cmd.category] = [];
-      category[cmd.category].push(cmd);
+        await conn.sendMessage(from, {
+            image: { url: repoData.owner.avatar_url },
+            caption: message.trim(),
+            contextInfo: {
+                mentionedJid: [m.sender],
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: '120363400378648653@newsletter',
+                    newsletterName: 'MAFIA-MD',
+                    serverMessageId: 143
+                }
+            }
+        }, { quoted: mek });
+
+    } catch (error) {
+        console.error("Error in the 'repo' command:", error);
+        reply("❌ A shadow slipped into the mission. Unable to reach the repository.");
     }
-
-    const keys = Object.keys(category).sort();
-
-    for (const k of keys) {
-      text += `\n┏▣ ◈  *${k.toUpperCase()} MENU* ◈\n`;
-      category[k]
-        .filter(c => c.pattern)
-        .sort((a, b) => a.pattern.localeCompare(b.pattern))
-        .forEach(c => {
-          const usage = c.pattern.split('|')[0];
-          text += `│➽ ${usage}\n`;
-        });
-      text += `┗▣ \n`;
-    }
-
-    await conn.sendMessage(from, {
-      image: { url: 'https://files.catbox.moe/ctrbmt.jpg' },
-      caption: text,
-      contextInfo: {
-        mentionedJid: [m.sender],
-        forwardingScore: 999,
-        isForwarded: true,
-        forwardedNewsletterMessageInfo: {
-          newsletterJid: '120363400378648653@newsletter',
-          newsletterName: '𝗠𝗔𝗙𝗜𝗔-𝗠𝗗',
-          serverMessageId: 143
-        }
-      }
-    }, { quoted: mek });
-
-  } catch (e) {
-    console.error(e);
-    reply(`❌ Error: ${e.message}`);
-  }
 });
