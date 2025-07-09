@@ -5,7 +5,7 @@ const { cmd } = require('../command');
 cmd({
     pattern: "repo",
     alias: ["sc", "script", "info"],
-    desc: "Infos du repaire (GitHub)",
+    desc: "Info about the repository (GitHub)",
     react: "📂",
     category: "info",
     filename: __filename,
@@ -15,7 +15,7 @@ async (conn, mek, m, { from, reply }) => {
 
     try {
         const match = githubRepoURL.match(/github\.com\/([^/]+)\/([^/]+)/);
-        if (!match) return reply("❌ Le lien vers le repaire est foireux, capo...");
+        if (!match) return reply("❌ The link to the repository is broken, capo...");
 
         const [, username, repoName] = match;
 
@@ -26,27 +26,26 @@ async (conn, mek, m, { from, reply }) => {
         });
 
         if (response.status === 503) {
-            return reply("❌ GitHub est dans les vapes... Attends un peu, soldat.");
+            return reply("❌ GitHub is down... Wait a bit, soldier.");
         }
 
         if (!response.ok) {
-            return reply(`❌ T’as été bloqué à la porte du repaire. Code: ${response.status}`);
+            return reply(`❌ You’ve been blocked from the repository. Code: ${response.status}`);
         }
 
         const repoData = await response.json();
 
         const message = `
 ╔══════════════╗
-║ 🕴️ 𝗟𝗘 𝗥𝗘𝗣𝗔𝗜𝗥𝗘 𝗗𝗘 𝗟𝗔 𝗠𝗔𝗙𝗜𝗔 🕴️
+║ 🕴️ 𝗧𝗛𝗘 𝗠𝗔𝗙𝗜𝗔 𝗥𝗘𝗣𝗢 🕴️
 ╠══════════════════════════════
-║ 🏷️ Nom : ${repoData.name}
-║ 🔫 Parrain : ${repoData.owner.login}
-║ ⭐ Influence : ${repoData.stargazers_count} étoiles
-║ 🍴 Clones : ${repoData.forks_count}
-║ 🔗 Repaire : ${repoData.html_url}
-║ 📜 Code secret : ${repoData.description || 'Aucun message...'}
+║ 🏷️ Name: ${repoData.name}
+║ 🔫 Godfather: ${repoData.owner.login}
+║ ⭐ Influence: ${repoData.stargazers_count} stars
+║ 🍴 Forks: ${repoData.forks_count}
+║ 🔗 Repository: ${repoData.html_url}
 ╚══════════════════════════════╝
-🔒 *Protégé par le cercle de l’Empereur Sukuna*
+🔒 *Protected by the circle of Emperor Sukuna*
 `;
 
         await conn.sendMessage(from, {
@@ -65,7 +64,7 @@ async (conn, mek, m, { from, reply }) => {
         }, { quoted: mek });
 
     } catch (error) {
-        console.error("Erreur dans la commande 'repo' :", error);
-        reply("❌ Une ombre s’est glissée dans la mission. Impossible d’atteindre le repaire.");
+        console.error("Error in the 'repo' command:", error);
+        reply("❌ A shadow slipped into the mission. Unable to reach the repository.");
     }
 });
