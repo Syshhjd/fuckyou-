@@ -93,7 +93,7 @@ cmd({
                 }
 
                 await conn.sendMessage(from, type, { quoted: mek });
-                await conn.sendMessage(from, { text: '✅ Media Upload Successful ✅          > *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴍᴘᴇʀᴏʀ sᴜᴋᴜɴᴀ*', edit: msg.key });
+                await conn.sendMessage(from, { text: '✅ Media Upload Successful ✅', edit: msg.key });
 
             } catch (error) {
                 console.error(error);
