@@ -14,7 +14,7 @@ async (conn, mek, m, { from, args, q, reply }) => {
         if (!q) return reply("Please provide a TikTok video link.");
         if (!q.includes("tiktok.com")) return reply("Invalid TikTok link.");
         
-        reply("Downloading video, please wait...");
+        reply("ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴠɪᴅᴇᴏ, ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...");
         
         const apiUrl = `https://delirius-apiofc.vercel.app/download/tiktok?url=${q}`;
         const { data } = await axios.get(apiUrl);
@@ -24,10 +24,10 @@ async (conn, mek, m, { from, args, q, reply }) => {
         const { title, like, comment, share, author, meta } = data.data;
         const videoUrl = meta.media.find(v => v.type === "video").org;
         
-        const caption = `🎵 *TikTok Video* 🎵\n\n` +
-                        `👤 *User:* ${author.nickname} (@${author.username})\n` +
-                        `📖 *Title:* ${title}\n` +
-                        `👍 *Likes:* ${like}\n💬 *Comments:* ${comment}\n🔁 *Shares:* ${share}`;
+        const caption = `🎵 *ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏ* 🎵\n\n` +
+                        `👤 *ᴜsᴇʀ:* ${author.nickname} (@${author.username})\n` +
+                        `📖 *ᴛɪᴛʟᴇ:* ${title}\n` +
+                        `👍 *ʟɪᴋᴇs:* ${like}\n💬 *ᴄᴏᴍᴍᴇɴᴛs:* ${comment}\n🔁 *sʜᴀʀᴇs:* ${share}`;
         
         await conn.sendMessage(from, {
             video: { url: videoUrl },
@@ -69,7 +69,7 @@ cmd({
         // Send video with minimal caption
         await conn.sendMessage(from, {
             video: { url: data.BK9.video.noWatermark },
-            caption: `- *Powered By JawadTechX 💜*`
+            caption: `- *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʀᴄ ᴛᴇᴄʜ 💜*`
         }, { quoted: mek });
 
         // Success reaction
@@ -113,7 +113,7 @@ cmd({
 
     await conn.sendMessage(from, {
       video: { url: video },
-      caption: `🎬 *TikTok Downloader*\n👤 *Author:* ${author}\n💬 *Caption:* ${caption}\n\n> Powered By JawadTechX 💜`
+      caption: `🎬 *ᴛɪᴋᴛᴏᴋ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ*\n👤 *ᴀᴜᴛʜᴏʀ:* ${author}\n💬 *ᴄᴀᴘᴛɪᴏɴ:* ${caption}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʀᴄ ᴛᴇᴄʜ 💜`
     }, { quoted: mek });
 
     await conn.sendMessage(from, { react: { text: "✅", key: m.key } });
