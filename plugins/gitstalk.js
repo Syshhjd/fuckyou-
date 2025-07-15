@@ -5,7 +5,7 @@ const { cmd, commands } = require('../command');
 cmd({
     pattern: "githubstalk",
     desc: "Fetch detailed GitHub user profile including profile picture.",
-    category: "search",
+    category: "download",
     react: "🖥️",
     filename: __filename
 },
