@@ -5,7 +5,7 @@ cmd({
   pattern: "react",
   alias: ["react-every-message"],
   use: '.react',
-  desc: "Réagit à chaque message sur la chaîne WhatsApp avec un emoji aléatoire",
+  desc: "Répond à chaque message sur la chaîne WhatsApp avec plusieurs emojis aléatoires",
   category: "settings",
   react: "💬",
   filename: __filename
@@ -13,36 +13,38 @@ cmd({
 async (conn, mek, m, { from, reply }) => {
   try {
     // Liste des emojis possibles
-    const emojis = ["💬", "❤️", "🔥", "😎", "💥", "✨", "🌟", "🎉", "🙌", "👍"];
+    const emojis = ["👍", "❤️", "🔥", "💥", "✨", "💪", "🌟", "🎉", "😎", "🧠"];
     
-    // Fonction pour choisir un emoji aléatoire
-    const getRandomEmoji = () => {
-      const randomIndex = Math.floor(Math.random() * emojis.length);
-      return emojis[randomIndex];
+    // Fonction pour choisir plusieurs emojis au hasard
+    const getRandomEmojis = () => {
+      const randomIndex1 = Math.floor(Math.random() * emojis.length);
+      const randomIndex2 = Math.floor(Math.random() * emojis.length);
+      const randomIndex3 = Math.floor(Math.random() * emojis.length);
+      return `${emojis[randomIndex1]} ${emojis[randomIndex2]} ${emojis[randomIndex3]}`;
     };
 
     // ID de la chaîne WhatsApp
     const channelId = '120363400378648653@newsletter'; // ID spécifique de la chaîne
 
-    // Fonction pour réagir à chaque message
-    const reactToMessages = async (message) => {
-      const reactEmoji = getRandomEmoji(); // Choisir un emoji au hasard
+    // Fonction pour répondre à chaque message avec plusieurs emojis
+    const autoReplyWithEmojis = async (message) => {
+      const emojiReply = getRandomEmojis(); // Choisir plusieurs emojis au hasard
       try {
-        // Réagir au message avec l'emoji choisi
-        await conn.sendMessage(channelId, { react: { text: reactEmoji, key: message.key } });
+        // Répondre au message avec les emojis choisis
+        await conn.sendMessage(channelId, { text: emojiReply, quoted: message });
       } catch (err) {
         console.error(err);
       }
     };
 
-    // Détection de chaque message et envoi d'une réaction
+    // Détection de chaque message et réponse avec des emojis
     conn.on('message-new', (message) => {
       if (message.key.remoteJid === channelId) {
-        reactToMessages(message);
+        autoReplyWithEmojis(message);
       }
     });
 
-    reply(`✅ Réaction automatique activée sur la chaîne WhatsApp: ${channelId}`);
+    reply(`✅ Réponse automatique activée sur la chaîne WhatsApp: ${channelId}`);
   } catch (e) {
     console.error(e);
     reply(`❌ Error: ${e.message}`);
