@@ -25,25 +25,23 @@ async (conn, mek, m, { from, reply }) => {
       return `${h}h ${m}m ${s}s`;
     };
 
-    
-
     // Simulation de la vitesse
     const speedMs = (performance.now() - startTime).toFixed(3);
 
     let text = `
 🖤🩸═══ 𝗠𝗔𝗙𝗜𝗔-𝗠𝗗 ════🩸🖤
+
 ╔═════════════════════╗
-║ 👤 𝗨𝘀𝗲𝗿     : @${m.sender.split("@")[0]}
-║ ⏳ 𝗥𝘂𝗻𝘁𝗶𝗺𝗲  : ${uptime()}
-║ ⚡ 𝗠𝗼𝗱𝗲     : ${config.MODE}
-║ 📝 𝗣𝗿𝗲𝗳𝗶𝘅    : [${config.PREFIX}]
+║ 🧑‍💻 𝗨𝘀𝗲𝗿   : @${m.sender.split("@")[0]}
+║ ⏳ 𝗥𝘂𝗻𝘁𝗶𝗺𝗲 : ${uptime()}
+║ ⚡ 𝗠𝗼𝗱𝗲    : ${config.MODE}
+║ 📝 𝗣𝗿𝗲𝗳𝗶𝘅  : [${config.PREFIX}]
 ║ 📦 𝗣𝗹𝘂𝗴𝗶𝗻𝘀 : ${totalCommands}
 ║ 🛠️ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 1.0.0
-║ ⚡ 𝗦𝗽𝗲𝗲𝗱    : ${speedMs} ms
-╚════════════════════╝
+║ ⚡ 𝗦𝗽𝗲𝗲𝗱   : ${speedMs} ms
+╚═════════════════════╝
 
 🔥 *WELCOME TO MAFIA-MD* 🔥
-
 `;
 
     const category = {};
@@ -56,15 +54,15 @@ async (conn, mek, m, { from, reply }) => {
     const keys = Object.keys(category).sort();
 
     for (const k of keys) {
-      text += `\n┏▣ ◈  *${k.toUpperCase()} MENU* ◈\n`;
+      text += `\n╔══════ ❒ *${k.toUpperCase()}* ❒ ══════╗\n`;
       category[k]
         .filter(c => c.pattern)
         .sort((a, b) => a.pattern.localeCompare(b.pattern))
         .forEach(c => {
           const usage = c.pattern.split('|')[0];
-          text += `│➽ ${usage}\n`;
+          text += `║ ❒ ${usage}\n`;
         });
-      text += `┗▣ \n`;
+      text += `╚════════════════════════════╝\n`;
     }
 
     await conn.sendMessage(from, {
