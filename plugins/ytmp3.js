@@ -24,19 +24,18 @@ cmd({
         let id = q.startsWith("https://") ? replaceYouTubeID(q) : null;
         let videoData;
 
-        if (!id) {
-            const searchResults = await dy_scrap.ytsearch(q);
-            if (!searchResults?.results?.length) return await reply("❌ No results found!");
-            videoData = searchResults.results[0];
-            id = videoData.videoId;
-        } else {
-            const searchResults = await dy_scrap.ytsearch(`https://youtube.com/watch?v=${id}`);
-            if (!searchResults?.results?.length) return await reply("❌ Failed to fetch video!");
-            videoData = searchResults.results[0];
-        }
+        // Use parallel fetching of video data and audio download link
+        const searchResultsPromise = dy_scrap.ytsearch(q);
+        const audioDownloadPromise = id ? dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`) : null;
 
-        // Quick MP3 Preload
-        const preloadedAudio = await dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
+        const searchResults = await searchResultsPromise;
+
+        if (!searchResults?.results?.length) return await reply("❌ No results found!");
+        videoData = searchResults.results[0];
+        id = videoData.videoId;
+
+        // Fetch the download link only after fetching video data
+        const preloadedAudio = await audioDownloadPromise || dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
 
         const { url, title, image, timestamp, ago, views, author } = videoData;
 
