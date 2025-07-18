@@ -37,10 +37,13 @@ cmd({
         // Fetch the download link only after fetching video data
         const preloadedAudio = await audioDownloadPromise || dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
 
+        // Debugging: Check if we got the download URL
+        console.log('Preloaded Audio Response:', preloadedAudio);
+
         const { url, title, image, timestamp, ago, views, author } = videoData;
 
         // Mafia style message
-        let info = `💀 *Mᴀꜰɪᴀ Sᴏɴɢ Dᴏᴡɴʟᴏᴀᴅᴇʀ* 💀\n\n` +
+        let info = `💀 *Mᴀꜰɪᴀ Sᴏɴɢ Dᴏɴᴡʟᴏᴀᴅᴇʀ* 💀\n\n` +
             `🎤 *Song:* ${title || "Unknown"}\n` +
             `⏳ *Duration:* ${timestamp || "Unknown"}\n` +
             `👀 *Views:* ${views || "Unknown"}\n` +
@@ -54,7 +57,12 @@ cmd({
 
         // Quick audio download link
         const downloadUrl = preloadedAudio?.result?.download?.url;
-        if (!downloadUrl) return await reply("❌ Download link not found!");
+
+        // Debugging: Check if the download URL is valid
+        if (!downloadUrl) {
+            console.error("Download link not found:", preloadedAudio);
+            return await reply("❌ Download link not found! It seems like the video may not be downloadable at this time.");
+        }
 
         // Immediately send the audio without additional interaction
         await conn.sendMessage(from, { text: "💀 *Processing...* 🔥" }, { quoted: mek });
