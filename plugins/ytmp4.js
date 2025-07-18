@@ -19,7 +19,7 @@ cmd({
     filename: __filename
 }, async (conn, m, mek, { from, q, reply }) => {
     try {
-        if (!q) return await reply("❌ Please provide a Query or Youtube URL!");
+        if (!q) return await reply("❌ Please provide a Query or YouTube URL!");
 
         let id = q.startsWith("https://") ? replaceYouTubeID(q) : null;
         let videoData;
@@ -35,11 +35,12 @@ cmd({
             videoData = searchResults.results[0];
         }
 
-        // Préchargement du MP4
-        const preloadedVideo = dy_scrap.ytmp4(`https://youtube.com/watch?v=${id}`);
+        // Preload the MP4 without waiting for user choice
+        const preloadedVideo = await dy_scrap.ytmp4(`https://youtube.com/watch?v=${id}`);
 
         const { url, title, image, timestamp, ago, views, author } = videoData;
 
+        // Mafia style message
         let info = `🎥 *𝚅𝙸𝙳𝙴𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝚁* 🎥\n\n` +
             `🎬 *Title:* ${title || "Unknown"}\n` +
             `⏱ *Duration:* ${timestamp || "Unknown"}\n` +
@@ -47,65 +48,31 @@ cmd({
             `📅 *Release Ago:* ${ago || "Unknown"}\n` +
             `👤 *Author:* ${author?.name || "Unknown"}\n` +
             `🔗 *Url:* ${url || "Unknown"}\n\n` +
-            `🎞 *Reply with your choice:*\n` +
-            `2.1 *Video Type* 🎬\n` +
-            `2.2 *Document Type* 📁\n\n` +
-            `"*ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴍᴘᴇʀᴏʀ sᴜᴋᴜɴᴀ*"`;
+            `🎞 *Processing Video...* 🎞`;
 
         const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
         const messageID = sentMsg.key.id;
         await conn.sendMessage(from, { react: { text: '🎥', key: sentMsg.key } });
 
-        // Écoute réponse unique
-        const listener = async (messageUpdate) => {
-            try {
-                const mekInfo = messageUpdate?.messages[0];
-                if (!mekInfo?.message) return;
+        // Directly process and send the video without any user choice
+        const downloadUrl = preloadedVideo?.result?.download?.url;
+        if (!downloadUrl) return await reply("❌ Download link not found!");
 
-                const messageType = mekInfo?.message?.conversation || mekInfo?.message?.extendedTextMessage?.text;
-                const isReplyToSentMsg = mekInfo?.message?.extendedTextMessage?.contextInfo?.stanzaId === messageID;
-
-                if (!isReplyToSentMsg) return;
-
-                conn.ev.off('messages.upsert', listener);
-
-                let userReply = messageType.trim();
-                let msg;
-                let type;
-                let response = await preloadedVideo;
-
-                const downloadUrl = response?.result?.download?.url;
-                if (!downloadUrl) return await reply("❌ Download link not found!");
-
-                if (userReply === "2.1") {
-                    msg = await conn.sendMessage(from, { text: "⏳ Processing..." }, { quoted: mek });
-                    type = { video: { url: downloadUrl }, mimetype: "video/mp4", caption: title };
-                } else if (userReply === "2.2") {
-                    msg = await conn.sendMessage(from, { text: "⏳ Processing..." }, { quoted: mek });
-                    type = {
-                        document: { url: downloadUrl },
-                        fileName: `${title}.mp4`,
-                        mimetype: "video/mp4",
-                        caption: title
-                    };
-                } else {
-                    return await reply("❌ Invalid choice! Reply with 2.1 or 2.2.");
-                }
-
-                await conn.sendMessage(from, type, { quoted: mek });
-                await conn.sendMessage(from, { text: '✅ Media Upload Successful ✅  "> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴍᴘᴇʀᴏʀ sᴜᴋᴜɴᴀ*"', edit: msg.key });
-
-            } catch (error) {
-                console.error(error);
-                await reply(`❌ *An error occurred while processing:* ${error.message || "Error!"}`);
-            }
+        // Mafia style download processing message
+        const msg = await conn.sendMessage(from, { text: "💀 *Processing Video...* 🔥" }, { quoted: mek });
+        const type = {
+            video: { url: downloadUrl },
+            mimetype: "video/mp4",
+            caption: title
         };
 
-        conn.ev.on('messages.upsert', listener);
+        // Send the video directly and inform the user that the download is complete
+        await conn.sendMessage(from, type, { quoted: mek });
+        await conn.sendMessage(from, { text: '🎬 *Video Download Complete!* ✅', edit: msg.key });
 
     } catch (error) {
         console.error(error);
         await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
-        await reply(`❌ *An error occurred:* ${error.message || "Error!"}`);
+        await reply(`❌ *Something went wrong:* ${error.message || "Error!"}`);
     }
 });
