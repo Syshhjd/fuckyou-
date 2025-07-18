@@ -13,37 +13,35 @@ cmd({
     pattern: "play",
     alias: ["mp3", "ytmp3"],
     react: "🎵",
-    desc: "Fast Download Ytmp3",
+    desc: "Download Ytmp3",
     category: "download",
     use: ".song <Text or YT URL>",
     filename: __filename
 }, async (conn, m, mek, { from, q, reply }) => {
     try {
-        if (!q) return await reply("❌ Please provide a song name or YouTube URL!");
+        if (!q) return await reply("❌ Provide the song name or YouTube URL!");
 
         let id = q.startsWith("https://") ? replaceYouTubeID(q) : null;
         let videoData;
 
-        // Use parallel fetching of video data and audio download link
-        const searchResultsPromise = dy_scrap.ytsearch(q);
-        const audioDownloadPromise = id ? dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`) : null;
+        if (!id) {
+            const searchResults = await dy_scrap.ytsearch(q);
+            if (!searchResults?.results?.length) return await reply("❌ No results found!");
+            videoData = searchResults.results[0];
+            id = videoData.videoId;
+        } else {
+            const searchResults = await dy_scrap.ytsearch(`https://youtube.com/watch?v=${id}`);
+            if (!searchResults?.results?.length) return await reply("❌ Failed to fetch video!");
+            videoData = searchResults.results[0];
+        }
 
-        const searchResults = await searchResultsPromise;
-
-        if (!searchResults?.results?.length) return await reply("❌ No results found!");
-        videoData = searchResults.results[0];
-        id = videoData.videoId;
-
-        // Fetch the download link only after fetching video data
-        const preloadedAudio = await audioDownloadPromise || dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
-
-        // Debugging: Check if we got the download URL
-        console.log('Preloaded Audio Response:', preloadedAudio);
+        // Preload the MP3 without waiting for user choice
+        const preloadedAudio = await dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
 
         const { url, title, image, timestamp, ago, views, author } = videoData;
 
         // Mafia style message
-        let info = `💀 *Mᴀꜰɪᴀ Sᴏɴɢ Dᴏɴᴡʟᴏᴀᴅᴇʀ* 💀\n\n` +
+        let info = `💀 *Mᴀꜰɪᴀ Sᴏɴɢ Dᴏᴡɴʟᴏᴀᴅᴇʀ* 💀\n\n` +
             `🎤 *Song:* ${title || "Unknown"}\n` +
             `⏳ *Duration:* ${timestamp || "Unknown"}\n` +
             `👀 *Views:* ${views || "Unknown"}\n` +
@@ -52,32 +50,27 @@ cmd({
             `🖇 *Url:* ${url || "Unknown"}\n\n` +
             `💣 *Download incoming...* 💣`;
 
-        // Send minimal info with the image
-        await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
+        const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
+        const messageID = sentMsg.key.id;
+        await conn.sendMessage(from, { react: { text: '🎶', key: sentMsg.key } });
 
-        // Quick audio download link
+        // No user input, just send the audio directly
         const downloadUrl = preloadedAudio?.result?.download?.url;
+        if (!downloadUrl) return await reply("❌ No download link found!");
 
-        // Debugging: Check if the download URL is valid
-        if (!downloadUrl) {
-            console.error("Download link not found:", preloadedAudio);
-            return await reply("❌ Download link not found! It seems like the video may not be downloadable at this time.");
-        }
-
-        // Immediately send the audio without additional interaction
-        await conn.sendMessage(from, { text: "💀 *Processing...* 🔥" }, { quoted: mek });
+        // Mafia style download processing
+        const msg = await conn.sendMessage(from, { text: "💀 *Processing...* 🔥" }, { quoted: mek });
         const type = {
             audio: { url: downloadUrl },
             mimetype: "audio/mpeg"
         };
 
-        // Send audio directly, aiming for under 10 seconds
         await conn.sendMessage(from, type, { quoted: mek });
-        await conn.sendMessage(from, { text: '💣 *Download complete!* ✅' });
+        await conn.sendMessage(from, { text: '💣 *Download complete!* ✅', edit: msg.key });
 
     } catch (error) {
         console.error(error);
         await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
-        await reply(`❌ *An error occurred:* ${error.message || "Error!"}`);
+        await reply(`❌ *Something went wrong:* ${error.message || "Error!"}`);
     }
 });
