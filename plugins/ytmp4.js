@@ -37,6 +37,9 @@ cmd({
 
         // Preload the MP4 without waiting for user choice
         const preloadedVideo = await dy_scrap.ytmp4(`https://youtube.com/watch?v=${id}`);
+        
+        // Log the response from ytmp4 API for debugging
+        console.log("Preloaded Video Response:", preloadedVideo);
 
         const { url, title, image, timestamp, ago, views, author } = videoData;
 
@@ -56,7 +59,14 @@ cmd({
 
         // Directly process and send the video without any user choice
         const downloadUrl = preloadedVideo?.result?.download?.url;
-        if (!downloadUrl) return await reply("❌ Download link not found!");
+        
+        // Log the download URL to check if it's being retrieved correctly
+        console.log("Download URL:", downloadUrl);
+        
+        if (!downloadUrl) {
+            // Provide more detailed error feedback
+            return await reply("❌ No download link found! The video might not be downloadable at the moment.");
+        }
 
         // Mafia style download processing message
         const msg = await conn.sendMessage(from, { text: "💀 *Processing Video...* 🔥" }, { quoted: mek });
