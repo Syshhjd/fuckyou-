@@ -13,64 +13,58 @@ cmd({
     pattern: "play",
     alias: ["mp3", "ytmp3"],
     react: "🎵",
-    desc: "Download Ytmp3",
+    desc: "Téléchargement rapide Ytmp3",
     category: "download",
     use: ".song <Text or YT URL>",
     filename: __filename
 }, async (conn, m, mek, { from, q, reply }) => {
     try {
-        if (!q) return await reply("❌ Provide the song name or YouTube URL!");
+        if (!q) return await reply("❌ Veuillez fournir une URL ou un nom de chanson!");
 
         let id = q.startsWith("https://") ? replaceYouTubeID(q) : null;
         let videoData;
 
         if (!id) {
             const searchResults = await dy_scrap.ytsearch(q);
-            if (!searchResults?.results?.length) return await reply("❌ No results found!");
+            if (!searchResults?.results?.length) return await reply("❌ Aucune chanson trouvée!");
             videoData = searchResults.results[0];
             id = videoData.videoId;
         } else {
             const searchResults = await dy_scrap.ytsearch(`https://youtube.com/watch?v=${id}`);
-            if (!searchResults?.results?.length) return await reply("❌ Failed to fetch video!");
+            if (!searchResults?.results?.length) return await reply("❌ Impossible de récupérer la vidéo!");
             videoData = searchResults.results[0];
         }
 
-        // Preload the MP3 without waiting for user choice
+        // Préchargement rapide du MP3
         const preloadedAudio = await dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
 
-        const { url, title, image, timestamp, ago, views, author } = videoData;
+        const { title, image } = videoData;
 
-        // Mafia style message
+        // Simplification du message
         let info = `💀 *Mᴀꜰɪᴀ Sᴏɴɢ Dᴏᴡɴʟᴏᴀᴅᴇʀ* 💀\n\n` +
-            `🎤 *Song:* ${title || "Unknown"}\n` +
-            `⏳ *Duration:* ${timestamp || "Unknown"}\n` +
-            `👀 *Views:* ${views || "Unknown"}\n` +
-            `🌏 *Release Ago:* ${ago || "Unknown"}\n` +
-            `👤 *By:* ${author?.name || "Unknown"}\n` +
-            `🖇 *Url:* ${url || "Unknown"}\n\n` +
-            `💣 *Download incoming...* 💣`;
+            `🎤 *Chanson:* ${title || "Inconnue"}\n` +
+            `💣 *Téléchargement en cours...* 💣`;
 
-        const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
-        const messageID = sentMsg.key.id;
-        await conn.sendMessage(from, { react: { text: '🎶', key: sentMsg.key } });
-
-        // No user input, just send the audio directly
+        // Envoyer uniquement l'audio sans interaction supplémentaire
         const downloadUrl = preloadedAudio?.result?.download?.url;
-        if (!downloadUrl) return await reply("❌ No download link found!");
+        if (!downloadUrl) return await reply("❌ Lien de téléchargement introuvable!");
 
-        // Mafia style download processing
-        const msg = await conn.sendMessage(from, { text: "💀 *Processing...* 🔥" }, { quoted: mek });
+        await conn.sendMessage(from, { text: info }, { quoted: mek });
+
+        // Envoi direct du fichier audio
+        const msg = await conn.sendMessage(from, { text: "💀 *Traitement...* 🔥" }, { quoted: mek });
         const type = {
             audio: { url: downloadUrl },
             mimetype: "audio/mpeg"
         };
 
+        // Envoi de l'audio en moins de 20 secondes
         await conn.sendMessage(from, type, { quoted: mek });
-        await conn.sendMessage(from, { text: '💣 *Download complete!* ✅', edit: msg.key });
+        await conn.sendMessage(from, { text: '💣 *Téléchargement terminé!* ✅', edit: msg.key });
 
     } catch (error) {
         console.error(error);
         await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
-        await reply(`❌ *Something went wrong:* ${error.message || "Error!"}`);
+        await reply(`❌ *Erreur:* ${error.message || "Erreur!"}`);
     }
 });
