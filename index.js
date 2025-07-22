@@ -175,7 +175,8 @@ const port = process.env.PORT || 9090;
             console.error("â Failed to notify groups:", err);
         }
     };
-    notifyChannel(); // Call immediately on launch
+
+    await notifyChannel(); // Call after connection
           logger: P({ level: 'silent' }),
           printQRInTerminal: false,
           browser: Browsers.macOS("Firefox"),
