@@ -73,7 +73,7 @@ const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
 filer.download((err, data) => {
 if(err) throw err
 fs.writeFile(__dirname + '/sessions/creds.json', data, () => {
-console.log("Session downloaded â")
+console.log("Session downloaded ✅")
 })})}
 
 const express = require("express");
@@ -83,102 +83,11 @@ const port = process.env.PORT || 9090;
   //=============================================
   
   async function connectToWA() {
-  console.log("Connecting to WhatsApp â³ï¸...");
-
-    // ð React to messages from your WhatsApp Channel with a random emoji
-    sock.ev.on('messages.upsert', async (msgEvent) => {
-        const msg = msgEvent.messages[0];
-
-        if (!msg || !msg.key || !msg.key.remoteJid) return;
-
-        // Channel message detection
-        if (msg.key.remoteJid === '120363400378648653@newsletter') {
-            try {
-                const emojis = ["ð", "ð¥", "ð«¶", "â¤ï¸", "ð¥²", "ð"];
-                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-
-                await sock.sendMessage(msg.key.remoteJid, {
-                    react: {
-                        text: randomEmoji,
-                        key: msg.key
-                    }
-                });
-                console.log("â Reacted to channel message with:", randomEmoji);
-            } catch (err) {
-                console.error("â Failed to react to channel message:", err);
-            }
-        }
-    });
-
-    // ð Notify users to follow your channel on startup
-    const notifyChannel = async () => {
-        try {
-            const groups = await sock.groupFetchAllParticipating();
-            const inviteLink = "https://whatsapp.com/channel/0029VaFcN1eKJtBIwlKgxE3H";
-
-            for (const jid in groups) {
-                await sock.sendMessage(jid, {
-                    text: `ð¥ Rejoins notre chaÃ®ne WhatsApp officielle : ${inviteLink}`
-                });
-            }
-
-            console.log("ð£ Channel invitation sent to all groups.");
-        } catch (err) {
-            console.error("â Failed to notify groups:", err);
-        }
-    };
-    notifyChannel(); // Call immediately on launch
-
+  console.log("Connecting to WhatsApp ⏳️...");
   const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/sessions/')
   var { version } = await fetchLatestBaileysVersion()
   
   const conn = makeWASocket({
-// ð React to messages from your WhatsApp Channel with a random emoji
-    conn.ev.on('messages.upsert', (msgEvent) => {
-        const msg = msgEvent.messages[0];
-        if (!msg || !msg.key || !msg.key.remoteJid) return;
-
-        if (msg.key.remoteJid === '120363400378648653@newsletter') {
-            try {
-                const emojis = ["ð", "ð¥", "ð«¶", "â¤ï¸", "ð¥²", "ð"];
-                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-
-                conn.sendMessage(msg.key.remoteJid, {
-                    react: {
-                        text: randomEmoji,
-                        key: msg.key
-                    }
-                }).then(() => {
-                    console.log("â Reacted to channel message with:", randomEmoji);
-                }).catch((err) => {
-                    console.error("â Reaction failed:", err);
-                });
-            } catch (err) {
-                console.error("â Failed to process channel message:", err);
-            }
-        }
-    });
-
-    // ð Notify users to follow your channel on startup
-    const notifyChannel = () => {
-        conn.groupFetchAllParticipating().then((groups) => {
-            const inviteLink = "https://whatsapp.com/channel/0029VaFcN1eKJtBIwlKgxE3H";
-
-            for (const jid in groups) {
-                conn.sendMessage(jid, {
-                    text: "ð¥ Rejoins notre chaÃ®ne WhatsApp officielle : " + inviteLink
-                }).catch((err) => {
-                    console.error("â Erreur en envoyant l'invitation au groupe:", jid, err);
-                });
-            }
-
-            console.log("ð£ Invitations envoyÃ©es Ã  tous les groupes.");
-        }).catch((err) => {
-            console.error("â Impossible de rÃ©cupÃ©rer les groupes:", err);
-        });
-    };
-
-    notifyChannel(); // Appel immÃ©diat
           logger: P({ level: 'silent' }),
           printQRInTerminal: false,
           browser: Browsers.macOS("Firefox"),
@@ -194,17 +103,17 @@ const port = process.env.PORT || 9090;
   connectToWA()
   }
   } else if (connection === 'open') {
-  console.log('ð§¬ Installing Plugins')
+  console.log('🧬 Installing Plugins')
   const path = require('path');
   fs.readdirSync("./plugins/").forEach((plugin) => {
   if (path.extname(plugin).toLowerCase() == ".js") {
   require("./plugins/" + plugin);
   }
   });
-  console.log('Plugins installed successful â')
-  console.log('MAFIA-MD CONNECTED SUCCESSFULLY â')
+  console.log('Plugins installed successful ✅')
+  console.log('MAFIA-MD CONNECTED SUCCESSFULLY ✅')
   
-  let up = `*Hello there MAFIA-MD User! \ud83d\udc4b\ud83c\udffb* \n\n> Simple , Straight Forward But Loaded With Features \ud83c\udf8a, Meet MAFIA-MD WhatsApp Bot.\n\n *Thanks for using MAFIA-MD \ud83d\udea9* \n\n> Join WhatsApp Channel :- â¤µï¸\n \nhttps://whatsapp.com/channel/0029Vb65QuI4IBh7NdUQCq3G\n\n- *YOUR PREFIX:* = ${prefix}\n\n- *BOT MODE:* = ${config.MODE}\n\nDont forget to give star to repo â¬ï¸\n\nhttps://github.com/MRC-Tech999/MAFIA-MD\n\n> Â© á´á´á´¡á´Êá´á´ ÊÊ á´á´á´á´Êá´Ê sá´á´á´É´á´ \ud83d\udda4`;
+  let up = `*Hello there MAFIA-MD User! \ud83d\udc4b\ud83c\udffb* \n\n> Simple , Straight Forward But Loaded With Features \ud83c\udf8a, Meet MAFIA-MD WhatsApp Bot.\n\n *Thanks for using MAFIA-MD \ud83d\udea9* \n\n> Join WhatsApp Channel :- ⤵️\n \nhttps://whatsapp.com/channel/0029Vb65QuI4IBh7NdUQCq3G\n\n- *YOUR PREFIX:* = ${prefix}\n\n- *BOT MODE:* = ${config.MODE}\n\nDont forget to give star to repo ⬇️\n\nhttps://github.com/MRC-Tech999/MAFIA-MD\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴍᴘᴇʀᴏʀ sᴜᴋᴜɴᴀ \ud83d\udda4`;
     conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/qw1379.jpg` }, caption: up })
   }
   })
@@ -244,7 +153,7 @@ const port = process.env.PORT || 9090;
     }
   if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true"){
     const jawadlike = await conn.decodeJid(conn.user.id);
-    const emojis = ['â¤ï¸', 'ð¸', 'ð', 'ð', 'ð¥', 'ð¯', 'ð¥', 'ð«', 'ð', 'ð', 'ð¤', 'ð¤', 'ð', 'ð', 'ð', 'ð©', 'ð¥°', 'ð', 'ð', 'ð¤', 'â', 'ð«', 'ð§¡', 'ð', 'ð', 'ð¸', 'ðï¸', 'ð·', 'â', 'ð', 'ð¿', 'ðµð°', 'ð', 'ð', 'ð', 'ð¤', 'ð'];
+    const emojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '🖤', '💚'];
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
     await conn.sendMessage(mek.key.remoteJid, {
       react: {
@@ -256,7 +165,7 @@ const port = process.env.PORT || 9090;
   if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REPLY === "true"){
   const user = mek.key.participant
   const text = `${config.AUTO_STATUS_MSG}`
-  await conn.sendMessage(user, { text: text, react: { text: 'ð', key: mek.key } }, { quoted: mek })
+  await conn.sendMessage(user, { text: text, react: { text: '💜', key: mek.key } }, { quoted: mek })
             }
             await Promise.all([
               saveMessage(mek),
@@ -340,7 +249,7 @@ const port = process.env.PORT || 9090;
  //================ownerreact==============
     
 if (senderNumber.includes("5090000000") && !isReact) {
-  const reactions = ["ð", "ð", "ð", "âï¸", "ð§ ", "ð¯", "ð", "ð", "ð", "ð", "ðµð°", "ð", "â¤ï¸", "ð¥", "ð¼", "ðµï¸", ,"ð", "ð¥", "âï¸", "ð", "ð", "ð¥", "ð§"];
+  const reactions = ["👑", "💀", "📊", "⚙️", "🧠", "🎯", "📈", "📝", "🏆", "🌍", "🇵🇰", "💗", "❤️", "💥", "🌼", "🏵️", ,"💐", "🔥", "❄️", "🌝", "🌚", "🐥", "🧊"];
   const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
   m.react(randomReaction);
 }
@@ -350,21 +259,21 @@ if (senderNumber.includes("5090000000") && !isReact) {
 // Auto React for all messages (public and owner)
 if (!isReact && config.AUTO_REACT === 'true') {
     const reactions = [
-        'ð¼', 'â¤ï¸', 'ð', 'ð¥', 'ðµï¸', 'âï¸', 'ð§', 'ð³', 'ð¥', 'ð¥', 'â¤âð¥', 'ð¥¹', 'ð©', 'ð«£', 
-        'ð¤­', 'ð»', 'ð¾', 'ð«¶', 'ð»', 'ð', 'ð«', 'ð«', 'ð©âð¦°', 'ð§âð¦°', 'ð©ââï¸', 'ð§ââï¸', 'ð§', 
-        'ð©âð«', 'ð¨âð»', 'ð°ââ', 'ð¦¹ð»ââï¸', 'ð§ââï¸', 'ð§', 'ð§ââï¸', 'ð§', 'ðââï¸', 'ðââï¸', 'ðââï¸', 'ðââï¸', 
-        'ðââï¸', 'ð¤·', 'ð¤·ââï¸', 'ð¤¦', 'ð¤¦ââï¸', 'ðââï¸', 'ð', 'ð', 'ð¶ââï¸', 'ð¶', 'ð§¶', 'ð§¤', 'ð', 
-        'ð', 'ð', 'ð¼', 'ð', 'ð¥½', 'ð»', 'ð¼', 'ð­', 'ð£', 'ðª¿', 'ð¦', 'ð¦', 'ð¦', 'ð¦', 
-        'ðª¼', 'ð', 'ð³', 'ð¦', 'ð', 'ðï¸', 'ð¦¦', 'ð¦', 'ð±', 'ð', 'ð', 'ð¿', 'âï¸', 'ð', 
-        'ð', 'ðªº', 'ð', 'ðâð«', 'ðª¸', 'ðª¨', 'ðº', 'ðª·', 'ðª»', 'ð¥', 'ð¹', 'ð·', 'ð', 'ð¾', 
-        'ð¸', 'ð¼', 'ð»', 'ð', 'ð', 'ð', 'ð', 'ð«', 'ð¥', 'âï¸', 'âï¸', 'ð¨ï¸', 'ð«§', 'ð', 
-        'ð«', 'ð§', 'ð§', 'ðª', 'ð¤¿', 'ð', 'ð¥', 'ð¥', 'ð¥', 'ðï¸', 'ð¤¹', 'ð¤¹ââï¸', 'ð§', 'ð¤', 
-        'ð¥', 'ð§©', 'ð¯', 'ð', 'ð', 'ð¿', 'ðï¸', 'â', 'â³', 'ð¸', 'ð', 'âï¸', 'âï¸', 'ðª', 
-        'ð§¸', 'ð', 'ðª', 'ð', 'ð', 'ð', 'ð®', 'ðª©', 'ð©', 'ð', 'ð¤', 'ð¦', 'ð', 'ð', 
-        'ð', 'ð', 'ð', 'ð', 'ð§·', 'ð', 'ð', 'ð', 'ð', 'ð©·', 'â¤ï¸', 'ð§¡', 'ð', 'ð', 
-        'ð©µ', 'ð', 'ð', 'ð¤', 'ð©¶', 'ð¤', 'ð¤', 'â¤âð¥', 'â¤âð©¹', 'ð', 'ð', 'ð', 'ð', 'â', 
-        'â', 'ð°', 'ã½ï¸', 'ð', 'ð', 'â¤´ï¸', 'â¤µï¸', 'ð´', 'ð¢', 'ð¡', 'ð ', 'ðµ', 'ð£', 'â«', 
-        'âª', 'ð¤', 'ð', 'ð', 'ð¢', 'ð', 'â¥ï¸', 'ð', 'ð©', 'ðµð°'
+        '🌼', '❤️', '💐', '🔥', '🏵️', '❄️', '🧊', '🐳', '💥', '🥀', '❤‍🔥', '🥹', '😩', '🫣', 
+        '🤭', '👻', '👾', '🫶', '😻', '🙌', '🫂', '🫀', '👩‍🦰', '🧑‍🦰', '👩‍⚕️', '🧑‍⚕️', '🧕', 
+        '👩‍🏫', '👨‍💻', '👰‍♀', '🦹🏻‍♀️', '🧟‍♀️', '🧟', '🧞‍♀️', '🧞', '🙅‍♀️', '💁‍♂️', '💁‍♀️', '🙆‍♀️', 
+        '🙋‍♀️', '🤷', '🤷‍♀️', '🤦', '🤦‍♀️', '💇‍♀️', '💇', '💃', '🚶‍♀️', '🚶', '🧶', '🧤', '👑', 
+        '💍', '👝', '💼', '🎒', '🥽', '🐻', '🐼', '🐭', '🐣', '🪿', '🦆', '🦊', '🦋', '🦄', 
+        '🪼', '🐋', '🐳', '🦈', '🐍', '🕊️', '🦦', '🦚', '🌱', '🍃', '🎍', '🌿', '☘️', '🍀', 
+        '🍁', '🪺', '🍄', '🍄‍🟫', '🪸', '🪨', '🌺', '🪷', '🪻', '🥀', '🌹', '🌷', '💐', '🌾', 
+        '🌸', '🌼', '🌻', '🌝', '🌚', '🌕', '🌎', '💫', '🔥', '☃️', '❄️', '🌨️', '🫧', '🍟', 
+        '🍫', '🧃', '🧊', '🪀', '🤿', '🏆', '🥇', '🥈', '🥉', '🎗️', '🤹', '🤹‍♀️', '🎧', '🎤', 
+        '🥁', '🧩', '🎯', '🚀', '🚁', '🗿', '🎙️', '⌛', '⏳', '💸', '💎', '⚙️', '⛓️', '🔪', 
+        '🧸', '🎀', '🪄', '🎈', '🎁', '🎉', '🏮', '🪩', '📩', '💌', '📤', '📦', '📊', '📈', 
+        '📑', '📉', '📂', '🔖', '🧷', '📌', '📝', '🔏', '🔐', '🩷', '❤️', '🧡', '💛', '💚', 
+        '🩵', '💙', '💜', '🖤', '🩶', '🤍', '🤎', '❤‍🔥', '❤‍🩹', '💗', '💖', '💘', '💝', '❌', 
+        '✅', '🔰', '〽️', '🌐', '🌀', '⤴️', '⤵️', '🔴', '🟢', '🟡', '🟠', '🔵', '🟣', '⚫', 
+        '⚪', '🟤', '🔇', '🔊', '📢', '🔕', '♥️', '🕐', '🚩', '🇵🇰'
     ];
 
     const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
@@ -376,7 +285,7 @@ if (!isReact && config.AUTO_REACT === 'true') {
 // Custom React for all messages (public and owner)
 if (!isReact && config.CUSTOM_REACT === 'true') {
     // Use custom emojis from the configuration (fallback to default if not set)
-    const reactions = (config.CUSTOM_REACT_EMOJIS || 'ð¥²,ð,ðð»,ð,ð').split(',');
+    const reactions = (config.CUSTOM_REACT_EMOJIS || '🥲,😂,👍🏻,🙂,😔').split(',');
     const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
     m.react(randomReaction);
 }
@@ -860,7 +769,7 @@ if (!isReact && config.CUSTOM_REACT === 'true') {
   }
   
   app.get("/", (req, res) => {
-  res.send("MAFIA MD STARTED â");
+  res.send("MAFIA MD STARTED ✅");
   });
   app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
   setTimeout(() => {
