@@ -1,43 +1,36 @@
 module.exports = {
-  name: "react-channel",
-  type: "event",
-  description: "Auto-react + Channel invite",
+  name: "channelreact",
+  alias: ["reactchannel", "chanreact"],
+  category: "utility",
+  description: "Réagit aux messages de la chaîne WhatsApp et envoie un lien d'invitation",
+  usage: "",
 
-  async onLoad(bot) {
-    // 🔔 Envoi dans tous les groupes une seule fois au démarrage
+  async run({ m, sock, args, isOwner }) {
+    const emojis = ["😂", "🔥", "🫶", "❤️", "🥲", "😏"];
+    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+    const targetChannel = "120363400378648653@newsletter";
+    const inviteLink = "https://whatsapp.com/channel/0029Vb6J7O684Om8DdNfvL2N";
+
+    // Réaction manuelle (commande)
     try {
-      const groups = await bot.groupFetchAllParticipating();
-      const inviteLink = "https://whatsapp.com/channel/0029Vb6J7O684Om8DdNfvL2N";
-      for (const jid in groups) {
-        await bot.sendMessage(jid, {
-          text: `🔥 Rejoins notre chaîne WhatsApp officielle : ${inviteLink}`
-        });
-      }
-      console.log("📣 Invitations envoyées à tous les groupes.");
-    } catch (e) {
-      console.error("Erreur en envoyant le lien de la chaîne:", e);
+      await sock.sendMessage(targetChannel, {
+        react: {
+          text: randomEmoji,
+          key: m.key
+        }
+      });
+      await m.reply("✅ Emoji réagi sur la chaîne !");
+    } catch (err) {
+      await m.reply("❌ Erreur lors de la réaction : " + err.message);
     }
 
-    // 🔁 Réaction automatique aux messages de chaîne
-    bot.ev.on("messages.upsert", async (msgEvent) => {
-      const msg = msgEvent.messages[0];
-      if (!msg || !msg.key || !msg.key.remoteJid) return;
-
-      if (msg.key.remoteJid === "120363400378648653@newsletter") {
-        try {
-          const emojis = ["😂", "🔥", "🫶", "❤️", "🥲", "😏"];
-          const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-
-          await bot.sendMessage(msg.key.remoteJid, {
-            react: {
-              text: randomEmoji,
-              key: msg.key,
-            },
-          });
-        } catch (err) {
-          console.error("Erreur de réaction:", err);
-        }
-      }
-    });
-  },
+    // Envoi du lien de la chaîne
+    try {
+      await sock.sendMessage(m.chat, {
+        text: `🔥 Voici le lien de la chaîne officielle : ${inviteLink}`
+      });
+    } catch (err) {
+      console.log("Erreur d'envoi du lien :", err);
+    }
+  }
 };
