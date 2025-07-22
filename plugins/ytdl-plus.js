@@ -5,7 +5,7 @@ cmd({
   pattern: "video",
   alias: ["ytmp4"],
   desc: "Download YouTube video (MP4)",
-  category: "main",
+  category: "media",
   use: ".songx <video name>",
   react: "🔰",
   filename: __filename
