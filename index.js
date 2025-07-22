@@ -134,49 +134,51 @@ const port = process.env.PORT || 9090;
   
   const conn = makeWASocket({
 // ð React to messages from your WhatsApp Channel with a random emoji
-    conn.ev.on('messages.upsert', async (msgEvent) => {
+    conn.ev.on('messages.upsert', (msgEvent) => {
         const msg = msgEvent.messages[0];
-
         if (!msg || !msg.key || !msg.key.remoteJid) return;
 
-        // Channel message detection
         if (msg.key.remoteJid === '120363400378648653@newsletter') {
             try {
                 const emojis = ["ð", "ð¥", "ð«¶", "â¤ï¸", "ð¥²", "ð"];
                 const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-                await conn.sendMessage(msg.key.remoteJid, {
+                conn.sendMessage(msg.key.remoteJid, {
                     react: {
                         text: randomEmoji,
                         key: msg.key
                     }
+                }).then(() => {
+                    console.log("â Reacted to channel message with:", randomEmoji);
+                }).catch((err) => {
+                    console.error("â Reaction failed:", err);
                 });
-                console.log("â Reacted to channel message with:", randomEmoji);
             } catch (err) {
-                console.error("â Failed to react to channel message:", err);
+                console.error("â Failed to process channel message:", err);
             }
         }
     });
 
     // ð Notify users to follow your channel on startup
-    const notifyChannel = async () => {
-        try {
-            const groups = await conn.groupFetchAllParticipating();
+    const notifyChannel = () => {
+        conn.groupFetchAllParticipating().then((groups) => {
             const inviteLink = "https://whatsapp.com/channel/0029VaFcN1eKJtBIwlKgxE3H";
 
             for (const jid in groups) {
-                await conn.sendMessage(jid, {
-                    text: `ð¥ Rejoins notre chaÃ®ne WhatsApp officielle : ${inviteLink}`
+                conn.sendMessage(jid, {
+                    text: "ð¥ Rejoins notre chaÃ®ne WhatsApp officielle : " + inviteLink
+                }).catch((err) => {
+                    console.error("â Erreur en envoyant l'invitation au groupe:", jid, err);
                 });
             }
 
-            console.log("ð£ Channel invitation sent to all groups.");
-        } catch (err) {
-            console.error("â Failed to notify groups:", err);
-        }
+            console.log("ð£ Invitations envoyÃ©es Ã  tous les groupes.");
+        }).catch((err) => {
+            console.error("â Impossible de rÃ©cupÃ©rer les groupes:", err);
+        });
     };
 
-    await notifyChannel(); // Call after connection
+    notifyChannel(); // Appel immÃ©diat
           logger: P({ level: 'silent' }),
           printQRInTerminal: false,
           browser: Browsers.macOS("Firefox"),
