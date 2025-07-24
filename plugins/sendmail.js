@@ -1,3 +1,4 @@
+const { cmd } = require('../command');
 const nodemailer = require('nodemailer');
 
 module.exports = {
