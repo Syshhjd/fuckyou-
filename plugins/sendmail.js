@@ -7,7 +7,7 @@ cmd({
   pattern: "sendmail",
   alias: ["sendemail", "mail"],
   desc: "📩 Envoie un email HTML stylisé avec image et signature.",
-  category: "Outils",
+  category: "utility",
   use: ".sendmail 1- email 2- sujet 3- message",
   filename: __filename
 }, async (conn, m, msg, { text, prefix, command }) => {
