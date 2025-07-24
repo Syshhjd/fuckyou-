@@ -7,7 +7,7 @@ cmd({
     react: "💫",
     alias: ["anticall"],
     desc: "Enable or disable welcome messages for new members",
-    category: "owner",
+    category: "settings",
     filename: __filename
 },
 async (conn, mek, m, { from, args, isCreator, reply }) => {
