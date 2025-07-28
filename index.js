@@ -172,7 +172,7 @@ conn.ev.on('connection.update', async (update) => {
     }
   } else if (connection === 'open' && !startupSent) {
     startupSent = true;
-    console.log('✅ MAFIZ-MD Connected');
+    console.log('✅ MAFIA-MD Connected');
 
 	              // Load plugins
             const pluginPath = path.join(__dirname, 'plugins');
