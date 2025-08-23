@@ -1,4 +1,6 @@
-const { cmd } = require('../command');
+
+
+/*const { cmd } = require('../command');
 const {
   cmd_newserver,
   cmd_listservers,
