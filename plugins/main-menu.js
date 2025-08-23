@@ -17,12 +17,14 @@ cmd({
   alias: ["help", "Mafia"],
   use: '.menu',
   desc: "Show all bot commands",
-  category: 'ai',
+  category: 'main',
   react: "🕶️",
   filename: __filename
 },
 async (conn, mek, m, { from, reply }) => {
   try {
+
+    const sender = m?.sender || mek?.key?.participant || mek?.key?.remoteJid || 'unknown@s.whatsapp.net';
     const totalCommands = commands.length;
     const startTime = performance.now(); // Début du calcul de la vitesse
 
@@ -31,13 +33,13 @@ async (conn, mek, m, { from, reply }) => {
     // En-tête creator
     let text = `
 ⟣──────────────────⟢
-▧ *ᴄʀᴇᴀᴛᴏʀ* : MARCTECH
+▧ *ᴜsᴇʀ* : @${sender.split("@")[0]}
 ▧ *ᴍᴏᴅᴇ* : *${config.MODE}* 
 ▧ *ᴘʀᴇғɪx* : *${config.PREFIX}*
-▧ *ʀᴀᴍ* : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${Math.round(require('os').totalmem / 1024 / 1024)}MB 
 ▧ *ᴠᴇʀsɪᴏɴ* : *${version}* 
 ▧ *ᴜᴘᴛɪᴍᴇ* : ${runtime(process.uptime())} 
 ▧ *ᴄᴏᴍᴍᴀɴᴅs* : ${totalCommands}
+▧ *ᴄʀᴇᴀᴛᴏʀ* : ᴍᴀʀᴄᴛᴇᴄʜ
 ⟣──────────────────⟢
 `;
 
@@ -51,7 +53,7 @@ async (conn, mek, m, { from, reply }) => {
     const keys = Object.keys(category).sort();
 
     for (const k of keys) {
-      text += `\n*╭─『 ${k.toUpperCase()} 』*\n`;
+      text += `\n*╭─『 ${k.toUpperCase()} MENU 』*\n`;
       category[k]
         .filter(c => c.pattern)
         .sort((a, b) => a.pattern.localeCompare(b.pattern))
@@ -71,7 +73,7 @@ async (conn, mek, m, { from, reply }) => {
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363400378648653@newsletter',
-          newsletterName: '𝗠𝗔𝗙𝗜𝗔-𝗠𝗗',
+          newsletterName: '𝐌𝐀𝐅𝐈𝐀-𝐌𝐃',
           serverMessageId: 143
         }
       }
