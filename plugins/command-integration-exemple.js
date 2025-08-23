@@ -11,16 +11,6 @@ async (conn, mek, m, { reply }) => {
   reply(await panel.listServers());
 });
 
-// Redémarre un serveur par nom
-cmd({
-  pattern: "restart",
-  use: ".restart nomDuServeur",
-  desc: "Redémarre un serveur par nom"
-},
-async (conn, mek, m, { reply, args }) => {
-  if (!args[0]) return reply("Donne le nom du serveur !\nExemple : .restart MonServeur");
-  reply(await panel.restartServer(args.join(" ")));
-});
 
 // Statut d’un serveur par nom
 cmd({
