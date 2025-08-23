@@ -1,4 +1,4 @@
-const panel = require('./pteroservercontrol');
+const panel = require('../panel');
 
 // Affiche tous les serveurs
 cmd({
