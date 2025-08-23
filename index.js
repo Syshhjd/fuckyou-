@@ -219,7 +219,7 @@ message:{
 ‎*╰───────────────────✑*`;
                     
                     await conn.sendMessage(conn.user.id, { 
-                        image: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/w1l8b0.jpg' }, 
+                        image: { url: `https://files.catbox.moe/w1l8b0.jpg` }, 
 			ai: true,
                         caption: upMessage},{
 			quoted: ali
