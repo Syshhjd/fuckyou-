@@ -6,14 +6,19 @@ const PANEL_URL = 'https://chat.vezxa.com';
 const API_APPLICATION = 'ptla_qIGcfH10YQtqqICF1nM6xRVQ7f6ag4tRW2UhWJidAw5'; // Application API Key
 const API_CLIENT = 'ptlc_mBlly3rDuPUHBCnonb32anVNRXTa3UhFP0E7R30FM5U'; // Client API Key
 
-// ---- CMD ----
+// === DEFAULT SERVER SETTINGS ===
+const DEFAULT_NEST = 5;           // ton nest (ex: NodeJS nest)
+const DEFAULT_EGG = 15;           // ton egg (ex: NodeJS 18)
+const DEFAULT_IMAGE = "ghcr.io/parkervcp/yolks:nodejs_18";
+const DEFAULT_STARTUP = "npm start";
+
 cmd({
   pattern: "createpanel",
-  desc: "Create a Pterodactyl server with just name & password",
+  desc: "Create unlimited Pterodactyl panels (name + password only)",
   category: "panel",
   react: "🛠️",
   filename: __filename
-}, async (conn, mek, m, { from, q, reply }) => {
+}, async (conn, mek, m, { q, reply }) => {
   try {
     if (!q) return reply("❌ Usage:\n.createpanel <name> <password>");
 
@@ -26,50 +31,7 @@ cmd({
     const name = args[0];
     const password = args[1];
 
-    // === Defaults ===
-    const memory = 0; // 1GB
-    const disk = 0;   // 2GB
-    const cpu = 100;     // 100%
-    const eggId = 5;     // default egg
-    const nestId = 1;    // default nest
-    const dockerImage = "ghcr.io/parkervcp/yolks:nodejs_18";
-
-    // === Server Payload ===
-    const data = {
-      name,
-      user: 1, // admin user ID
-      egg: eggId,
-      docker_image: dockerImage,
-      startup: "npm start",
-      limits: {
-        memory,
-        disk,
-        cpu,
-        swap: 0,
-        io: 500
-      },
-      feature_limits: {
-        databases: 1,
-        allocations: 1,
-        backups: 1
-      },
-      environment: {
-        NODE_ENV: "production"
-      }
-    };
-
-    // === Create server ===
-    const res = await axios.post(`${PANEL_URL}/api/application/servers`, data, {
-      headers: {
-        Authorization: `Bearer ${API_APPLICATION}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    });
-
-    const server = res.data.attributes;
-
-    // === Create Client User ===
+    // === Create User ===
     const userRes = await axios.post(`${PANEL_URL}/api/application/users`, {
       username: name,
       email: `${name}@vezxa.com`,
@@ -86,6 +48,40 @@ cmd({
 
     const user = userRes.data.attributes;
 
+    // === Create Server (linked to this user) ===
+    const serverRes = await axios.post(`${PANEL_URL}/api/application/servers`, {
+      name: `${name}-server`,
+      user: user.id,                // 👈 serveur lié au nouvel user
+      nest: DEFAULT_NEST,
+      egg: DEFAULT_EGG,
+      docker_image: DEFAULT_IMAGE,
+      startup: DEFAULT_STARTUP,
+      limits: {
+        memory: 0,  // 1GB
+        disk: 0,    // 2GB
+        cpu: 0,
+        swap: 0,
+        io: 500
+      },
+      feature_limits: {
+        databases: 1,
+        allocations: 1,
+        backups: 1
+      },
+      environment: {
+        NODE_ENV: "production"
+      }
+    }, {
+      headers: {
+        Authorization: `Bearer ${API_APPLICATION}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    });
+
+    const server = serverRes.data.attributes;
+
+    // === Reply ===
     reply(
       `✅ Panel Created!\n\n` +
       `🔸 Panel: ${PANEL_URL}\n` +
@@ -93,7 +89,7 @@ cmd({
       `📧 Email: ${user.email}\n` +
       `🔑 Password: ${password}\n` +
       `🖥️ Server: ${server.name}\n` +
-      `ID: ${server.id}`
+      `📀 Memory: 1024MB | Disk: 2048MB | CPU: 100%`
     );
 
   } catch (err) {
