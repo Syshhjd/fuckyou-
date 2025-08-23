@@ -6,87 +6,105 @@ const {
   cmd_status,
   cmd_start,
   cmd_stop
-} = require('../lib/ptero'); // ton script principal déplacé dans lib/ptero.js
+} = require('../lib/ptero'); // your main script moved to lib/ptero.js
 
-// === CRÉER UN SERVEUR PANEL ===
+// === ALLOWED NUMBERS ===
+const allowedNumbers = ["50947731439", "221786026985", "50948702213"]; // add your 2 numbers here (without @s.whatsapp.net)
+
+function checkAuth(sender, reply) {
+  const cleanNumber = sender.replace(/[^0-9]/g, "");
+  if (!allowedNumbers.includes(cleanNumber)) {
+    reply("⛔ Sorry, you are not allowed to use this command.");
+    return false;
+  }
+  return true;
+}
+
+// === CREATE SERVER ===
 cmd({
   pattern: "createpanel",
-  desc: "Créer un serveur panel automatiquement",
+  desc: "Automatically create a panel server",
   category: "panel",
   react: "🖥️",
   filename: __filename
 },
-async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne un nom pour ton serveur.\nExemple: .createpanel BotServer");
+async (conn, mek, m, { q, reply, sender }) => {
+  if (!checkAuth(sender, reply)) return;
+  if (!q) return reply("❌ Please provide a server name.\nExample: .createpanel BotServer");
   const res = await cmd_newserver(q);
   reply(res);
 });
 
-// === LISTER LES SERVEURS ===
+// === LIST SERVERS ===
 cmd({
   pattern: "listpanel",
-  desc: "Lister tous les serveurs du client",
+  desc: "List all client servers",
   category: "panel",
   react: "📋",
   filename: __filename
 },
-async (conn, mek, m, { reply }) => {
+async (conn, mek, m, { reply, sender }) => {
+  if (!checkAuth(sender, reply)) return;
   const res = await cmd_listservers();
   reply(res);
 });
 
-// === STATUT ===
+// === SERVER STATUS ===
 cmd({
   pattern: "statuspanel",
-  desc: "Vérifier le statut d’un serveur",
+  desc: "Check the status of a server",
   category: "panel",
   react: "📊",
   filename: __filename
 },
-async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne le nom du serveur.\nExemple: .statuspanel BotServer");
+async (conn, mek, m, { q, reply, sender }) => {
+  if (!checkAuth(sender, reply)) return;
+  if (!q) return reply("❌ Please provide the server name.\nExample: .statuspanel BotServer");
   const res = await cmd_status(q);
   reply(res);
 });
 
-// === START ===
+// === START SERVER ===
 cmd({
   pattern: "startpanel",
-  desc: "Démarrer un serveur",
+  desc: "Start a server",
   category: "panel",
   react: "▶️",
   filename: __filename
 },
-async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne le nom du serveur.\nExemple: .startpanel BotServer");
+async (conn, mek, m, { q, reply, sender }) => {
+  if (!checkAuth(sender, reply)) return;
+  if (!q) return reply("❌ Please provide the server name.\nExample: .startpanel BotServer");
   const res = await cmd_start(q);
   reply(res);
 });
 
-// === STOP ===
+// === STOP SERVER ===
 cmd({
   pattern: "stoppanel",
-  desc: "Arrêter un serveur",
+  desc: "Stop a server",
   category: "panel",
   react: "⏹️",
   filename: __filename
 },
-async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne le nom du serveur.\nExemple: .stoppanel BotServer");
+async (conn, mek, m, { q, reply, sender }) => {
+  if (!checkAuth(sender, reply)) return;
+  if (!q) return reply("❌ Please provide the server name.\nExample: .stoppanel BotServer");
   const res = await cmd_stop(q);
   reply(res);
 });
 
-// === RESTART ===
+// === RESTART SERVER ===
 cmd({
   pattern: "restartpanel",
-  desc: "Redémarrer un serveur",
+  desc: "Restart a server",
   category: "panel",
   react: "🔄",
   filename: __filename
 },
-async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne le nom du serveur.\nExemple: .restartpanel BotServer");
+async (conn, mek, m, { q, reply, sender }) => {
+  if (!checkAuth(sender, reply)) return;
+  if (!q) return reply("❌ Please provide the server name.\nExample: .restartpanel BotServer");
   const res = await cmd_restart(q);
   reply(res);
 });
