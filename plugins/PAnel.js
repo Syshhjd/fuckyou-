@@ -1,5 +1,7 @@
 const panel = require('../lib/ptero');
-const cmd = require('../command')
+const { cmd } = require('../command');
+
+
 // .newserver NomServeur
 cmd({
   pattern: "newserver",
