@@ -1,5 +1,4 @@
 const { cmd } = require('../command');
-
 const {
   cmd_newserver,
   cmd_listservers,
@@ -7,87 +6,102 @@ const {
   cmd_status,
   cmd_start,
   cmd_stop
-} = require('../lib/ptero'); // ton script principal déplacé dans lib/ptero.js
+} = require('../lib/ptero');
 
-// === CRÉER UN SERVEUR PANEL ===
+// === ALLOWED OWNER NUMBERS ===
+const owners = ["50947731439", "221786026985"]; // only 2 numbers
+
+// === CHECK IF SENDER IS OWNER ===
+function isOwner(sender) {
+  const number = sender.replace(/[^0-9]/g, ''); // keep only digits
+  return owners.includes(number);
+}
+
+// === CREATE PANEL SERVER ===
 cmd({
   pattern: "createpanel",
-  desc: "Créer un serveur panel automatiquement",
+  desc: "Automatically create a panel server",
   category: "panel",
   react: "🖥️",
   filename: __filename
 },
 async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne un nom pour ton serveur.\nExemple: .createpanel BotServer");
+  if (!isOwner(m.sender)) return reply("❌ You are not authorized to use this command!");
+  if (!q) return reply("❌ Please provide a server name.\nExample: .createpanel BotServer");
   const res = await cmd_newserver(q);
   reply(res);
 });
 
-// === LISTER LES SERVEURS ===
+// === LIST PANEL SERVERS ===
 cmd({
   pattern: "listpanel",
-  desc: "Lister tous les serveurs du client",
+  desc: "List all servers of the client",
   category: "panel",
   react: "📋",
   filename: __filename
 },
 async (conn, mek, m, { reply }) => {
+  if (!isOwner(m.sender)) return reply("❌ You are not authorized to use this command!");
   const res = await cmd_listservers();
   reply(res);
 });
 
-// === STATUT ===
+// === SERVER STATUS ===
 cmd({
   pattern: "statuspanel",
-  desc: "Vérifier le statut d’un serveur",
+  desc: "Check server status",
   category: "panel",
   react: "📊",
   filename: __filename
 },
 async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne le nom du serveur.\nExemple: .statuspanel BotServer");
+  if (!isOwner(m.sender)) return reply("❌ You are not authorized to use this command!");
+  if (!q) return reply("❌ Please provide the server name.\nExample: .statuspanel BotServer");
   const res = await cmd_status(q);
   reply(res);
 });
 
-// === START ===
+// === START SERVER ===
 cmd({
   pattern: "startpanel",
-  desc: "Démarrer un serveur",
+  desc: "Start a server",
   category: "panel",
   react: "▶️",
   filename: __filename
 },
 async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne le nom du serveur.\nExemple: .startpanel BotServer");
+  if (!isOwner(m.sender)) return reply("❌ You are not authorized to use this command!");
+  if (!q) return reply("❌ Please provide the server name.\nExample: .startpanel BotServer");
   const res = await cmd_start(q);
   reply(res);
 });
 
-// === STOP ===
+// === STOP SERVER ===
 cmd({
   pattern: "stoppanel",
-  desc: "Arrêter un serveur",
+  desc: "Stop a server",
   category: "panel",
   react: "⏹️",
   filename: __filename
 },
 async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne le nom du serveur.\nExemple: .stoppanel BotServer");
+  if (!isOwner(m.sender)) return reply("❌ You are not authorized to use this command!");
+  if (!q) return reply("❌ Please provide the server name.\nExample: .stoppanel BotServer");
   const res = await cmd_stop(q);
   reply(res);
 });
 
-// === RESTART ===
+// === RESTART SERVER ===
 cmd({
   pattern: "restartpanel",
-  desc: "Redémarrer un serveur",
+  desc: "Restart a server",
   category: "panel",
   react: "🔄",
   filename: __filename
 },
 async (conn, mek, m, { q, reply }) => {
-  if (!q) return reply("❌ Donne le nom du serveur.\nExemple: .restartpanel BotServer");
+  if (!isOwner(m.sender)) return reply("❌ You are not authorized to use this command!");
+  if (!q) return reply("❌ Please provide the server name.\nExample: .restartpanel BotServer");
   const res = await cmd_restart(q);
   reply(res);
 });
