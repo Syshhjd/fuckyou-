@@ -1,6 +1,4 @@
-
-
-/* const { cmd } = require('../command');
+const { cmd } = require('../command');
 const {
   cmd_newserver,
   cmd_listservers,
@@ -92,4 +90,3 @@ async (conn, mek, m, { q, reply }) => {
   const res = await cmd_restart(q);
   reply(res);
 });
-*/
