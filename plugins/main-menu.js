@@ -2,6 +2,15 @@ const config = require('../config');
 const { cmd, commands } = require('../command');
 const os = require('os');
 const { performance } = require('perf_hooks'); // Pour le calcul de la vitesse
+const version = '1.0.0'; // Version du bot
+
+// Fonction uptime formatée
+const runtime = (sec) => {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = Math.floor(sec % 60);
+  return `${h}h ${m}m ${s}s`;
+};
 
 cmd({
   pattern: "menu",
@@ -17,31 +26,19 @@ async (conn, mek, m, { from, reply }) => {
     const totalCommands = commands.length;
     const startTime = performance.now(); // Début du calcul de la vitesse
 
-    const uptime = () => {
-      const sec = process.uptime();
-      const h = Math.floor(sec / 3600);
-      const m = Math.floor((sec % 3600) / 60);
-      const s = Math.floor(sec % 60);
-      return `${h}h ${m}m ${s}s`;
-    };
-
-    // Simulation de la vitesse
     const speedMs = (performance.now() - startTime).toFixed(3);
 
+    // En-tête creator
     let text = `
-🖤🩸═══ 𝗠𝗔𝗙𝗜𝗔-𝗠𝗗 ════🩸🖤
-
-╔═════════════════════╗
-║ 🧑‍💻 𝗨𝘀𝗲𝗿   : @${m.sender.split("@")[0]}
-║ ⏳ 𝗥𝘂𝗻𝘁𝗶𝗺𝗲 : ${uptime()}
-║ ⚡ 𝗠𝗼𝗱𝗲    : ${config.MODE}
-║ 📝 𝗣𝗿𝗲𝗳𝗶𝘅  : [${config.PREFIX}]
-║ 📦 𝗣𝗹𝘂𝗴𝗶𝗻𝘀 : ${totalCommands}
-║ 🛠️ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 1.0.0
-║ ⚡ 𝗦𝗽𝗲𝗲𝗱   : ${speedMs} ms
-╚═════════════════════╝
-
-🔥 *𝐖𝐄𝐋𝐂𝐎𝐌𝐄 𝐓𝐎 𝐌𝐀𝐅𝐈𝐀-𝐌𝐃* 🔥
+⟣──────────────────⟢
+▧ *ᴄʀᴇᴀᴛᴏʀ* : MARCTECH
+▧ *ᴍᴏᴅᴇ* : *${config.MODE}* 
+▧ *ᴘʀᴇғɪx* : *${config.PREFIX}*
+▧ *ʀᴀᴍ* : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${Math.round(require('os').totalmem / 1024 / 1024)}MB 
+▧ *ᴠᴇʀsɪᴏɴ* : *${version}* 
+▧ *ᴜᴘᴛɪᴍᴇ* : ${runtime(process.uptime())} 
+▧ *ᴄᴏᴍᴍᴀɴᴅs* : ${totalCommands}
+⟣──────────────────⟢
 `;
 
     const category = {};
@@ -54,15 +51,15 @@ async (conn, mek, m, { from, reply }) => {
     const keys = Object.keys(category).sort();
 
     for (const k of keys) {
-      text += `\n╔════ ❒ *${k.toUpperCase()}* ❒ ════╗\n`;
+      text += `\n*╭─『 ${k.toUpperCase()} 』*\n`;
       category[k]
         .filter(c => c.pattern)
         .sort((a, b) => a.pattern.localeCompare(b.pattern))
         .forEach(c => {
           const usage = c.pattern.split('|')[0];
-          text += `║ ❒ ${usage}\n`;
+          text += `*│* ■ ${usage}\n`;
         });
-      text += `╚═════════════════════╝\n`;
+      text += `*╰────────────────⟢*\n`;
     }
 
     await conn.sendMessage(from, {
