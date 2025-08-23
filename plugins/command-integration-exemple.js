@@ -1,4 +1,5 @@
 const panel = require('../panel');
+const { cmd } = require('../command');
 
 // Affiche tous les serveurs
 cmd({
