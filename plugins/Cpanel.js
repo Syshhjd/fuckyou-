@@ -9,7 +9,7 @@ const {
 } = require('../lib/ptero');
 
 // === ALLOWED OWNER NUMBERS ===
-const owners = ["50947731439", "221786026985"]; // only 2 numbers
+const owners = ["50947731439", "221786026985","50947731439"]; // only 2 numbers
 
 // === CHECK IF SENDER IS OWNER ===
 function isOwner(sender) {
