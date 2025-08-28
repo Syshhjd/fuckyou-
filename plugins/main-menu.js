@@ -23,14 +23,12 @@ cmd({
 },
 async (conn, mek, m, { from, reply }) => {
   try {
-
     const sender = m?.sender || mek?.key?.participant || mek?.key?.remoteJid || 'unknown@s.whatsapp.net';
     const totalCommands = commands.length;
     const startTime = performance.now();
-
     const speedMs = (performance.now() - startTime).toFixed(3);
 
-    // Nouveau style du menu
+    // ─── HEADER ───
     let text = `
 ╭━〔 *𝐌𝐀𝐅𝐈𝐀-𝐌𝐃* 〕━┈⊷
 ┃╭─────────────────
@@ -45,9 +43,10 @@ async (conn, mek, m, { from, reply }) => {
 ╰━━━━━━━━━━━━━━━━━━
 `;
 
+    // ─── AUTO-CATEGORIES ───
     const category = {};
     for (const cmd of commands) {
-      if (!cmd.category || cmd.category === "owner") continue; 
+      if (!cmd.category) continue;
       if (!category[cmd.category]) category[cmd.category] = [];
       category[cmd.category].push(cmd);
     }
@@ -59,13 +58,13 @@ async (conn, mek, m, { from, reply }) => {
 ╭────────────────❏
 ├❍ *\`${k.toUpperCase()} MENU\`*
 ├────────────────❏`;
-      category[k]
-        .filter(c => c.pattern)
-        .sort((a, b) => a.pattern.localeCompare(b.pattern))
-        .forEach(c => {
-          const usage = c.pattern.split('|')[0];
-          text += `\n├➩ ${usage}`;
-        });
+
+      category[k].forEach(c => {
+        if (!c.pattern) return;
+        const usage = c.pattern.split('|')[0];
+        text += `\n├➩ ${usage}`;
+      });
+
       text += `\n┕────────────────❍\n`;
     }
 
