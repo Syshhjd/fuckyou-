@@ -1,8 +1,8 @@
 const config = require('../config');
 const { cmd, commands } = require('../command');
 const os = require('os');
-const { performance } = require('perf_hooks'); // Pour le calcul de la vitesse
-const version = '1.0.0'; // Version du bot
+const { performance } = require('perf_hooks');
+const version = '1.0.0';
 
 // Fonction uptime formatée
 const runtime = (sec) => {
@@ -26,26 +26,28 @@ async (conn, mek, m, { from, reply }) => {
 
     const sender = m?.sender || mek?.key?.participant || mek?.key?.remoteJid || 'unknown@s.whatsapp.net';
     const totalCommands = commands.length;
-    const startTime = performance.now(); // Début du calcul de la vitesse
+    const startTime = performance.now();
 
     const speedMs = (performance.now() - startTime).toFixed(3);
 
-    // En-tête creator
+    // Nouveau style du menu
     let text = `
-⟣──────────────────⟢
-▧ *ᴜsᴇʀ* : @${sender.split("@")[0]}
-▧ *ᴍᴏᴅᴇ* : *${config.MODE}* 
-▧ *ᴘʀᴇғɪx* : *${config.PREFIX}*
-▧ *ᴠᴇʀsɪᴏɴ* : *${version}* 
-▧ *ᴜᴘᴛɪᴍᴇ* : ${runtime(process.uptime())} 
-▧ *ᴄᴏᴍᴍᴀɴᴅs* : ${totalCommands}
-▧ *ᴄʀᴇᴀᴛᴏʀ* : ᴍᴀʀᴄᴛᴇᴄʜ
-⟣──────────────────⟢
+╭━〔 *𝐌𝐀𝐅𝐈𝐀-𝐌𝐃* 〕━┈⊷
+┃╭─────────────────
+┃│ *ᴜsᴇʀ* : @${sender.split("@")[0]}
+┃│ *ᴍᴏᴅᴇ* : *${config.MODE}*
+┃│ *ᴘʀᴇғɪx* : *${config.PREFIX}*
+┃│ *ᴠᴇʀsɪᴏɴ* : *${version}*
+┃│ *ᴜᴘᴛɪᴍᴇ* : ${runtime(process.uptime())}
+┃│ *ᴄᴏᴍᴍᴀɴᴅs* : ${totalCommands}
+┃│ *ᴄʀᴇᴀᴛᴏʀ* : ᴍᴀʀᴄᴛᴇᴄʜ
+┃╰─────────────────
+╰━━━━━━━━━━━━━━━━━━
 `;
 
     const category = {};
     for (const cmd of commands) {
-      if (!cmd.category || cmd.category === "owner") continue; // Exclure la catégorie "owner"
+      if (!cmd.category || cmd.category === "owner") continue; 
       if (!category[cmd.category]) category[cmd.category] = [];
       category[cmd.category].push(cmd);
     }
@@ -53,16 +55,21 @@ async (conn, mek, m, { from, reply }) => {
     const keys = Object.keys(category).sort();
 
     for (const k of keys) {
-      text += `\n*╭─『 ${k.toUpperCase()} MENU 』*\n`;
+      text += `
+╭────────────────❏
+├❍ *\`${k.toUpperCase()} MENU\`*
+├────────────────❏`;
       category[k]
         .filter(c => c.pattern)
         .sort((a, b) => a.pattern.localeCompare(b.pattern))
         .forEach(c => {
           const usage = c.pattern.split('|')[0];
-          text += `*│* ■ ${usage}\n`;
+          text += `\n├➩ ${usage}`;
         });
-      text += `*╰────────────────⟢*\n`;
+      text += `\n┕────────────────❍\n`;
     }
+
+    text += `> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʀᴄᴛᴇᴄʜ`;
 
     await conn.sendMessage(from, {
       image: { url: 'https://files.catbox.moe/ctrbmt.jpg' },
